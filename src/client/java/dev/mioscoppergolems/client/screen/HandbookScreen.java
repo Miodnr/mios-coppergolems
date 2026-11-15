@@ -24,7 +24,7 @@ import net.minecraft.resources.Identifier;
  */
 public class HandbookScreen extends BookViewScreen {
 	private static final List<String> CHAPTERS = List.of(
-		"welcome", "homes", "sorter", "cart", "miner", "farmer", "workers", "courier", "travel", "danger", "upkeep", "tools", "trims", "reference"
+		"welcome", "homes", "sorter", "cart", "miner", "farmer", "workers", "courier", "danger", "upkeep", "tools", "trims", "reference"
 	);
 	private static final int LINE_WIDTH = TEXT_WIDTH;
 	private static final int LINES_PER_PAGE = TEXT_HEIGHT / 9;

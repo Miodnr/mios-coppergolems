@@ -51,11 +51,14 @@ public class Habour implements ModInitializer {
 		MiosCoppergolemsApi.registerJob(Captains.JOB);
 		MiosCoppergolemsApi.registerJob(Dockhands.JOB);
 		MiosCoppergolemsApi.registerJob(Conductors.JOB);
-		MiosCoppergolemsApi.registerVehicleReservation(vehicle -> vehicle.getAttached(HabourAttachments.BOAT_TAKEN_UNTIL) != null && vehicle.getAttached(HabourAttachments.BOAT_TAKEN_UNTIL) > vehicle.level().getGameTime());
 		MiosCoppergolemsApi.registerBehavior(CaptainBehavior::new);
 		MiosCoppergolemsApi.registerBehavior(DockhandBehavior::new);
 		MiosCoppergolemsApi.registerBehavior(ConductorBehavior::new);
-		ServerLifecycleEvents.SERVER_STOPPING.register(server -> Fleet.clear());
+		ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+			Fleet.clear();
+			dev.mioscoppergolems.habour.captain.BoatPilot.forgetAll();
+		});
+		ServerTickEvents.END_LEVEL_TICK.register(dev.mioscoppergolems.habour.captain.BoatPilot::tickPaddles);
 		MiosCoppergolemsApi.registerLinkTarget(Captains.LINK);
 		UseEntityCallback.EVENT.register(Captains::onUseEntity);
 		ServerTickEvents.END_LEVEL_TICK.register(Harbours::tick);

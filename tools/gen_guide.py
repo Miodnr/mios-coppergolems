@@ -68,7 +68,6 @@ MAIN_TREE = [
     ("eyes", "home", "minecraft:gold_block", done(), "task", True),
     ("courier", "home", "minecraft:barrel", done(), "task", True),
     ("long_haul", "courier", "minecraft:compass", done(), "goal", True),
-    ("ride", "home", "minecraft:minecart", done(), "task", True),
     ("recharge", "home", f"{MAIN}:charging_pad", done(), "task", True),
     ("scrape", "recharge", "minecraft:dispenser", done(), "task", True),
     ("guard", "build_golem", "minecraft:poppy", done(), "task", True),
@@ -122,8 +121,6 @@ MAIN_ADV = {
                 ("Eilzustellung", "Richte eine Kurierroute zwischen zwei Truhen ein")),
     "long_haul": (("Long Haul", "Set up a courier route over 500 blocks long"),
                   ("Fernverkehr", "Richte eine Kurierroute über mehr als 500 Blöcke ein")),
-    "ride": (("All Aboard", "Watch a golem ride a minecart or a boat"),
-             ("Alles einsteigen", "Sieh zu, wie ein Golem Lore oder Boot fährt")),
     "recharge": (("Recharged", "Charge a working golem to full on a Charging Pad driven by a redstone clock"),
                  ("Aufgeladen", "Lade einen Golem auf einem Ladefeld mit Redstone-Taktgeber ganz auf")),
     "scrape": (("Good as New", "Scrape a rusty golem with an axe in a dispenser"),
@@ -367,24 +364,6 @@ Linking it to a home copper chest ends the route."""),
 Er nimmt 16 Gegenstände pro Gang mit, mit angeketteter Lore eine ganze Ladung. Unterwegs hält er die Chunks um sich geladen, damit die Route auch funktioniert, wenn du weit weg bist. Ist das Ziel voll, wartet er.
 
 Verbindest du ihn mit einer Kupfertruhe als Zuhause, endet die Route.""")),
-    "travel": (("Minecarts and Boats", """A golem heading somewhere more than 24 blocks away looks around for a ride.
-
-# Minecart
-An empty minecart on straight rails that run the right way. The golem pushes it along at about four times walking speed and gets off near its goal.
-
-# Boat
-An empty boat on water that stretches the right way. The golem paddles straight towards its goal and climbs out at the shore.
-
-A golem towing a cart always walks."""),
-               ("Loren und Boote", """Ein Golem, der mehr als 24 Blöcke weit muss, sieht sich nach einer Mitfahrgelegenheit um.
-
-# Lore
-Eine leere Lore auf geraden Schienen in die richtige Richtung. Der Golem schiebt sie mit etwa vierfacher Gehgeschwindigkeit und steigt nahe am Ziel aus.
-
-# Boot
-Ein leeres Boot auf Wasser, das sich in die richtige Richtung erstreckt. Der Golem paddelt geradewegs zum Ziel und klettert am Ufer heraus.
-
-Ein Golem, der eine Lore zieht, geht immer zu Fuß.""")),
     "danger": (("Monsters and Iron Golems", """Monsters hunt copper golems: zombies, skeletons, spiders, illagers and more. A copper golem has only 12 health.
 
 # Guards

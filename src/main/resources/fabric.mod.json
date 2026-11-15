@@ -3,7 +3,7 @@
 	"id": "mioscoppergolems",
 	"version": "${version}",
 	"name": "Mios Coppergolems",
-	"description": "Copper golems that do real work: jobs, homes, couriers, minecart and boat rides, armour trims, and iron golems to keep them safe.",
+	"description": "Copper golems that do real work: jobs, homes, couriers, armour trims, and iron golems to keep them safe.",
 	"authors": ["Miodnr"],
 	"license": "All-Rights-Reserved",
 	"environment": "*",

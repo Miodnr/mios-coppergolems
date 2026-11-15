@@ -90,6 +90,8 @@ public class HabourClientGameTest implements FabricClientGameTest {
 			int trips = server.computeOnServer(s -> kontor(s, setup.kontorA()).routes().get(0).trips());
 			log("scenario 1: A has " + ironA + " iron, B has " + ironB + ", trips " + trips);
 			check(ironA == 180 && ironB == 20 && trips == 1, "iron counts are wrong");
+			log("oars moving on the client in " + oarsMoving + " of " + oarSamples + " samples of a sailing boat");
+			check(oarSamples >= 5 && oarsMoving * 10 >= oarSamples * 8, "the oars were not moving while the boat sailed");
 
 			if (System.getenv("HABOUR_QUICK") != null) {
 				log("PASS (quick)");
@@ -110,6 +112,16 @@ public class HabourClientGameTest implements FabricClientGameTest {
 			context.waitForScreen(AbstractContainerScreen.class);
 			context.waitTicks(10);
 			context.takeScreenshot("habour_routes");
+			context.setScreen(() -> null);
+			server.runCommand("tp @p 74 " + (g + 1) + " 5 150 20");
+			context.waitTicks(20);
+			server.runOnServer(s -> {
+				ServerPlayer player = s.getPlayerList().getPlayers().get(0);
+				kontor(s, setup.kontorB()).openRoutes(player);
+			});
+			context.waitForScreen(AbstractContainerScreen.class);
+			context.waitTicks(10);
+			context.takeScreenshot("habour_routes_empty");
 			context.setScreen(() -> null);
 			context.waitTicks(10);
 
@@ -277,6 +289,7 @@ public class HabourClientGameTest implements FabricClientGameTest {
 	private static boolean pollUntil(ClientGameTestContext context, TestServerContext server, Setup setup, int clientTicks, java.util.function.Predicate<MinecraftServer> condition, String what) {
 		for (int i = 0; i < clientTicks; i++) {
 			context.waitTicks(10);
+			sampleOars(context, server);
 			if (server.computeOnServer(condition::test)) {
 				log(what + " done after " + i * 10 + " client ticks");
 				return true;
@@ -286,6 +299,32 @@ public class HabourClientGameTest implements FabricClientGameTest {
 			}
 		}
 		return false;
+	}
+
+	private static int oarSamples;
+	private static int oarsMoving;
+
+	/** Looks at the boats that are really sailing and checks on the client that their oars are moving. */
+	private static void sampleOars(ClientGameTestContext context, TestServerContext server) {
+		List<UUID> sailing = server.computeOnServer(s -> {
+			List<UUID> found = new ArrayList<>();
+			for (Entity e : s.overworld().getEntitiesOfClass(AbstractChestBoat.class, new net.minecraft.world.phys.AABB(-400, -64, -400, 400, 320, 400))) {
+				if (e.isVehicle() && e.getDeltaMovement().horizontalDistance() > 0.08) {
+					found.add(e.getUUID());
+				}
+			}
+			return found;
+		});
+		for (UUID id : sailing) {
+			boolean rowing = context.computeOnClient(mc -> mc.level != null && mc.level.getEntity(id) instanceof net.minecraft.world.entity.vehicle.boat.AbstractBoat boat && boat.getPaddleState(0) && boat.getPaddleState(1));
+			if (oarSamples < 6) {
+				log("oar sample: client rowing=" + rowing + ", server paddle=" + server.computeOnServer(sv -> sv.overworld().getEntity(id) instanceof net.minecraft.world.entity.vehicle.boat.AbstractBoat b && b.getPaddleState(0)));
+			}
+			oarSamples++;
+			if (rowing) {
+				oarsMoving++;
+			}
+		}
 	}
 
 	private static String describe(MinecraftServer server, Setup setup) {

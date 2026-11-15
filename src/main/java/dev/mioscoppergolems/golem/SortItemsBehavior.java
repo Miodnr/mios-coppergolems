@@ -19,7 +19,6 @@ import dev.mioscoppergolems.mining.MineBehavior;
 import dev.mioscoppergolems.mining.MinerData;
 import dev.mioscoppergolems.repair.Errands;
 import dev.mioscoppergolems.repair.RepairBehavior;
-import dev.mioscoppergolems.travel.RideBehavior;
 import dev.mioscoppergolems.upkeep.ChargeBehavior;
 import dev.mioscoppergolems.upkeep.Upkeep;
 import java.util.ArrayDeque;
@@ -181,8 +180,6 @@ public class SortItemsBehavior extends Behavior<CopperGolem> {
 			)
 		);
 		MiosCoppergolemsApi.behaviors().forEach(factory -> behaviors.add(Pair.of(0, factory.get())));
-		// Last, so it sees the walk target the job behaviours just set.
-		behaviors.add(Pair.of(0, new RideBehavior()));
 		behaviors.add(Pair.of(1, SetEntityLookTargetSometimes.create(EntityTypes.PLAYER, 6.0F, UniformInt.of(40, 80))));
 		behaviors.add(
 			Pair.of(

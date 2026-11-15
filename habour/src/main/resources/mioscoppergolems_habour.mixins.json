@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "dev.mioscoppergolems.habour.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"AbstractBoatMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

@@ -20,7 +20,7 @@ import org.jspecify.annotations.Nullable;
  * goal if it is inside the window and otherwise at the spot closest to it. Bays that lead nowhere are remembered as
  * dead zones and avoided from then on.
  * <p>
- * The boat is steered like {@code RideBehavior} does it: it is turned and pushed along its heading every tick.
+ * The boat is turned and pushed along its heading every tick.
  */
 public final class BoatPilot {
 	public enum Result {
@@ -31,8 +31,12 @@ public final class BoatPilot {
 	}
 
 	private static final double TURN = 5.0;
-	private static final double PUSH = 0.045;
-	private static final double CRUISE = 0.30;
+	private static final double PUSH = 0.022;
+	/** Blocks per tick: about 3.4 blocks a second, a calm rowing pace. */
+	private static final double CRUISE = 0.17;
+	/** A boat counts as rowing for this many ticks after the pilot last pushed it. */
+	private static final long ROW_GRACE = 3L;
+	private static final Map<AbstractBoat, Long> ROWING = new java.util.WeakHashMap<>();
 	private static final double ARRIVE = 1.3;
 	private static final int REPLAN_TICKS = 100;
 	private static final int MAX_EXPANSIONS = 9000;
@@ -301,19 +305,51 @@ public final class BoatPilot {
 			double scale = speedLimit / speed;
 			boat.setDeltaMovement(motion.x * scale, motion.y, motion.z * scale);
 		}
-		boat.setPaddleState(true, true);
+		ROWING.put(boat, boat.level().getGameTime());
 	}
 
 	private void brake(AbstractBoat boat) {
 		Vec3 motion = boat.getDeltaMovement();
 		boat.setDeltaMovement(motion.x * 0.8, motion.y, motion.z * 0.8);
+		ROWING.remove(boat);
 		boat.setPaddleState(false, false);
 	}
 
 	/** Stops the boat dead, once it has moored. */
 	public static void stop(AbstractBoat boat) {
 		boat.setDeltaMovement(Vec3.ZERO);
+		ROWING.remove(boat);
 		boat.setPaddleState(false, false);
+	}
+
+	/**
+	 * Runs at the end of every level tick. A boat with a golem in it clears its own paddle state at the start of its tick
+	 * (only a player's input keeps the oars moving), so the oars are switched on again here, after all entities have
+	 * ticked and before the state is sent to the players.
+	 */
+	public static void tickPaddles(ServerLevel level) {
+		if (ROWING.isEmpty()) {
+			return;
+		}
+		long now = level.getGameTime();
+		java.util.Iterator<Map.Entry<AbstractBoat, Long>> it = ROWING.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<AbstractBoat, Long> entry = it.next();
+			AbstractBoat boat = entry.getKey();
+			if (boat.level() != level) {
+				continue;
+			}
+			if (boat.isRemoved() || now - entry.getValue() > ROW_GRACE) {
+				boat.setPaddleState(false, false);
+				it.remove();
+			} else {
+				boat.setPaddleState(true, true);
+			}
+		}
+	}
+
+	public static void forgetAll() {
+		ROWING.clear();
 	}
 
 	private static double horizontal(Vec3 a, Vec3 b) {

@@ -34,6 +34,15 @@ import org.jspecify.annotations.Nullable;
  */
 public class RouteMenu extends AbstractContainerMenu {
 	public static final int CARGO_SLOTS = Route.MAX_CARGO;
+	/** The layout of the route book (the screen draws around these). */
+	public static final int WIDTH = 232;
+	public static final int HEIGHT = 262;
+	public static final int CARGO_X = 8;
+	public static final int CARGO_Y = 107;
+	public static final int DEST_X = 8;
+	public static final int DEST_Y = 31;
+	public static final int INV_X = 35;
+	public static final int INV_Y = 181;
 	public static final int DEST_SLOT = CARGO_SLOTS;
 	private static final int FIRST_PLAYER_SLOT = CARGO_SLOTS + 1;
 
@@ -88,6 +97,8 @@ public class RouteMenu extends AbstractContainerMenu {
 	private final DataSlot fleetDistance = DataSlot.standalone();
 	private final DataSlot fleetDirection = DataSlot.standalone();
 	private final DataSlot fleetAge = DataSlot.standalone();
+	/** 1 when the book belongs to a railway station, 0 for a kontor. */
+	private final DataSlot station = DataSlot.standalone();
 	private final DataSlot[] amounts = new DataSlot[CARGO_SLOTS];
 
 	private int route;
@@ -102,14 +113,14 @@ public class RouteMenu extends AbstractContainerMenu {
 		this.kontor = kontor;
 		this.access = kontor != null && kontor.getLevel() != null ? ContainerLevelAccess.create(kontor.getLevel(), kontor.getBlockPos()) : ContainerLevelAccess.NULL;
 		for (int i = 0; i < CARGO_SLOTS; i++) {
-			this.addSlot(new GhostSlot(this.ghosts, i, 8 + i * 18, 113));
+			this.addSlot(new GhostSlot(this.ghosts, i, CARGO_X + i * 18, CARGO_Y));
 		}
-		this.addSlot(new GhostSlot(this.destination, 0, 8, 28));
-		this.addStandardInventorySlots(inventory, 8, 183);
+		this.addSlot(new GhostSlot(this.destination, 0, DEST_X, DEST_Y));
+		this.addStandardInventorySlots(inventory, INV_X, INV_Y);
 		for (DataSlot slot : new DataSlot[] {
 			this.routeCount, this.selected, this.enabled, this.repeats, this.interval, this.trigger, this.waitForFull, this.status,
 			this.destCount, this.destIndex, this.selectedSlot, this.running, this.trips, this.delivered,
-				this.fleetCount, this.fleetPhase, this.fleetDistance, this.fleetDirection, this.fleetAge
+				this.fleetCount, this.fleetPhase, this.fleetDistance, this.fleetDirection, this.fleetAge, this.station
 		}) {
 			this.addDataSlot(slot);
 		}
@@ -217,6 +228,10 @@ public class RouteMenu extends AbstractContainerMenu {
 	}
 
 	/** Seconds since that captain last reported. */
+	public boolean isStation() {
+		return this.station.get() != 0;
+	}
+
 	public int fleetAge() {
 		return this.fleetAge.get();
 	}
@@ -261,6 +276,7 @@ public class RouteMenu extends AbstractContainerMenu {
 		if (this.kontor == null) {
 			return;
 		}
+		this.station.set(this.kontor.isStation() ? 1 : 0);
 		int count = this.kontor.routes().size();
 		this.routeCount.set(count);
 		if (count == 0) {
@@ -562,6 +578,11 @@ public class RouteMenu extends AbstractContainerMenu {
 
 	@Override
 	public boolean stillValid(Player player) {
-		return stillValid(this.access, player, HabourBlocks.KONTOR);
+		// A kontor or a railway station (a subclass of the kontor block): the vanilla check wants one exact block.
+		return this.access.evaluate(
+			(level, pos) -> level.getBlockState(pos).getBlock() instanceof dev.mioscoppergolems.habour.kontor.KontorBlock
+				&& player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 64.0,
+			true
+		);
 	}
 }

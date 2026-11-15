@@ -135,6 +135,21 @@ public class RailClientGameTest implements FabricClientGameTest {
 			server.runCommand("tp @p 70 " + (g + 5) + " 14 150 30");
 			context.waitTicks(40);
 			context.takeScreenshot("rail_station_b");
+			server.runCommand("tp @p 8 " + (g + 5) + " 8 -150 30");
+			context.waitTicks(20);
+			server.runOnServer(s -> {
+				net.minecraft.server.level.ServerPlayer player = s.getPlayerList().getPlayers().get(0);
+				station(s, setup.stationA()).openRoutes(player);
+			});
+			context.waitForScreen(net.minecraft.client.gui.screens.inventory.AbstractContainerScreen.class);
+			context.waitTicks(20);
+			log("station book: server menu=" + server.computeOnServer(s -> s.getPlayerList().getPlayers().get(0).containerMenu.getClass().getSimpleName())
+				+ ", client screen=" + context.computeOnClient(mc -> String.valueOf(mc.gui.screen() == null ? null : mc.gui.screen().getClass().getSimpleName())));
+			context.runOnClient(mc -> mc.options.guiScale().set(1));
+			context.waitTicks(10);
+			context.takeScreenshot("rail_routes");
+			context.setScreen(() -> null);
+			context.runOnClient(mc -> mc.options.guiScale().set(0));
 			log("PASS");
 		}
 	}

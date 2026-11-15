@@ -74,10 +74,10 @@ These were my calls to make while building; change them if you disagree.
 - **One voyage = one captain, one boat, one-way cargo.** Boats come back empty; set up a second route the other way for return cargo.
 - **Same water level only.** The pilot does not handle locks, waterfalls or ice; it needs a boat's width (3 blocks including the margin to the shore) and 2 blocks of air above the water.
 - **No custom networking.** The route book uses ghost slots and data slots like the Survey Table, so it is as robust as vanilla menus.
-- **Captains stay out of the vanilla "ride" behaviour** while on a voyage, through a small new hook in the base mod (see below).
+- **Boats and minecarts are for the add-on only.** Golems no longer ride them on their own (the base mod used to let any golem on a long walk climb into a boat or cart); only captains and conductors do, and only here.
 
 ### Changes to the base mod
-`GolemJob` got a new optional method `busy(CopperGolem)` and `MiosCoppergolemsApi.isBusy(golem)` for jobs that must not be interrupted (a captain at sea, a dockhand carrying cargo). `ChargeBehavior` and `RideBehavior` skip busy golems. `MiosCoppergolemsApi.registerVehicleReservation` lets an add-on mark boats and carts as taken, so `RideBehavior` does not borrow them. `CopperChestMinecart.setChain(ItemStack)` lets a conductor store the chain it couples with, so the chain comes back when the cart is unchained. Nothing else in the base mod changed.
+`GolemJob` got a new optional method `busy(CopperGolem)` and `MiosCoppergolemsApi.isBusy(golem)` for jobs that must not be interrupted (a captain at sea, a dockhand carrying cargo). `ChargeBehavior` skips busy golems. The base mod's `RideBehavior` (golems riding boats and minecarts on long trips) is removed. `CopperChestMinecart.setChain(ItemStack)` lets a conductor store the chain it couples with, so the chain comes back when the cart is unchained. Nothing else in the base mod changed.
 
 ---
 
@@ -93,7 +93,7 @@ The same idea on rails: a **Railway Station** (it uses the kontor's code: storag
 
 How a trip goes: the station picks the free train near it with the most room; if the cargo needs more room, the conductor **fetches chains from the station and couples free carts standing within 8 blocks** to the end of the train, one by one (up to five carts, each with its own chain, which comes out of the station's storage). It then sits in the lead cart while the dockhands load all carts. At the start of each leg it checks which way the carts lie: if they are ahead of the train it climbs out, the chains are moved so that the last cart leads, and it takes that cart's seat (**the train turns round on plain track**, no loop needed). It drives to the rail closest to the other station, waits while that station's dockhands unload the carts, turns the empty train round and drives it home. The carts stay coupled for the next run.
 
-The track is read from the rails as they are: curves and slopes are fine. **Junctions are not switched**: a train only takes the way the rail blocks point. Keep other carts off the track. Carts are marked as taken while a conductor uses them, so other golems do not climb into them.
+The track is read from the rails as they are: curves and slopes are fine. **Junctions are not switched**: a train only takes the way the rail blocks point. Keep other carts off the track.
 
 Locate and the fleet line in the route book work for conductors too.
 
@@ -161,6 +161,7 @@ habour/src/main/java/dev/mioscoppergolems/habour/
   dock/             MooringPostBlock
   route/            Route, Cargo, Trigger, Status
   captain/          Captains, Dockhands, Conductors (jobs, linking), Voyage, Vessel, DockWork (carrying), CaptainBehavior, ConductorBehavior, DockhandBehavior, BoatPilot (sailing)
+  mixin/            AbstractBoatMixin (vanilla only shows moving oars for a player at the helm; a golem captain's oars move too)
   rail/             Rails (the track as a graph), RailPilot (driving), Trains (finding, turning round)
   harbour/          HarbourRegistry (saved data), Harbours (wake-ups), Fleet (where captains are), Berths, Waters
   menu/             RouteMenu
