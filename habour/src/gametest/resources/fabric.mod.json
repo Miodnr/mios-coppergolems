@@ -1,0 +1,17 @@
+{
+	"schemaVersion": 1,
+	"id": "mioscoppergolems_habour_gametest",
+	"version": "1.0.0",
+	"name": "Habour Game Test",
+	"environment": "client",
+	"entrypoints": {
+		"fabric-client-gametest": [
+			"dev.mioscoppergolems.habour.gametest.HabourClientGameTest",
+			"dev.mioscoppergolems.habour.gametest.RailSpikeGameTest",
+			"dev.mioscoppergolems.habour.gametest.RailClientGameTest"
+		]
+	},
+	"depends": {
+		"mioscoppergolems_habour": "*"
+	}
+}

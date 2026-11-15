@@ -124,6 +124,33 @@ public final class MiosCoppergolemsApi {
 		return LINK_TARGETS;
 	}
 
+	private static final List<java.util.function.Predicate<net.minecraft.world.entity.Entity>> VEHICLE_RESERVATIONS = new ArrayList<>();
+
+	/** Add-ons that use boats or carts for their own work register here, so other golems do not climb into them. */
+	public static void registerVehicleReservation(java.util.function.Predicate<net.minecraft.world.entity.Entity> reserved) {
+		VEHICLE_RESERVATIONS.add(reserved);
+	}
+
+	/** Whether an add-on has this boat or cart for its own work. */
+	public static boolean isVehicleReserved(net.minecraft.world.entity.Entity vehicle) {
+		for (java.util.function.Predicate<net.minecraft.world.entity.Entity> reserved : VEHICLE_RESERVATIONS) {
+			if (reserved.test(vehicle)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/** Whether a job of this golem is in the middle of something (see {@link GolemJob#busy}). */
+	public static boolean isBusy(CopperGolem golem) {
+		for (GolemJob job : JOBS) {
+			if (job.has(golem) && job.busy(golem)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/** The registered job this golem has, if any. */
 	public static @Nullable GolemJob jobOf(CopperGolem golem) {
 		for (GolemJob job : JOBS) {

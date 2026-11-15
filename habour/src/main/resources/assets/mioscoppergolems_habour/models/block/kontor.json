@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "mioscoppergolems_habour:block/kontor_top",
+    "front": "mioscoppergolems_habour:block/kontor_front",
+    "side": "mioscoppergolems_habour:block/kontor_side"
+  }
+}

@@ -22,6 +22,14 @@ public interface GolemJob {
 		return null;
 	}
 
+	/**
+	 * Whether the golem is in the middle of something it must not be pulled away from, like a captain at sea: such a golem
+	 * does not go to charge and does not hop into carts or boats of its own accord.
+	 */
+	default boolean busy(CopperGolem golem) {
+		return false;
+	}
+
 	/** Drops whatever the golem carries for this job (on death, or when it turns into a statue). */
 	default void dropItems(ServerLevel level, CopperGolem golem) {
 	}

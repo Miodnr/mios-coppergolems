@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "mioscoppergolems_automatisation:item/cart_extension"
-  }
-}

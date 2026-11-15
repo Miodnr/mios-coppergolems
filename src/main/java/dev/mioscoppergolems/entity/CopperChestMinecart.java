@@ -169,6 +169,11 @@ public class CopperChestMinecart extends AbstractMinecartContainer {
 		return this.entityData.get(DATA_CHAIN);
 	}
 
+	/** Sets the chain item the cart is towed with (add-ons that couple carts hand it over here; it drops again on unchaining). */
+	public void setChain(ItemStack chain) {
+		this.entityData.set(DATA_CHAIN, chain.copyWithCount(1));
+	}
+
 	public boolean isChained() {
 		return this.level().isClientSide() ? this.entityData.get(DATA_HOLDER_ID) != -1 : this.holderUuid != null;
 	}

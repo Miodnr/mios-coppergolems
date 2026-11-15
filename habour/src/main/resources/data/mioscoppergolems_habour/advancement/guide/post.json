@@ -1,0 +1,25 @@
+{
+  "parent": "mioscoppergolems_habour:guide/kontor",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "mioscoppergolems_habour:mooring_post"
+    },
+    "title": {
+      "translate": "advancements.mioscoppergolems_habour.guide.post.title"
+    },
+    "description": {
+      "translate": "advancements.mioscoppergolems_habour.guide.post.description"
+    },
+    "frame": "task"
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

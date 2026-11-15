@@ -1,0 +1,25 @@
+{
+  "parent": "mioscoppergolems_habour:guide/captain",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "minecraft:oak_chest_boat"
+    },
+    "title": {
+      "translate": "advancements.mioscoppergolems_habour.guide.route.title"
+    },
+    "description": {
+      "translate": "advancements.mioscoppergolems_habour.guide.route.description"
+    },
+    "frame": "task"
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

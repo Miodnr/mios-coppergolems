@@ -1,0 +1,25 @@
+{
+  "parent": "mioscoppergolems_habour:guide/post",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "minecraft:spyglass"
+    },
+    "title": {
+      "translate": "advancements.mioscoppergolems_habour.guide.captain.title"
+    },
+    "description": {
+      "translate": "advancements.mioscoppergolems_habour.guide.captain.description"
+    },
+    "frame": "task"
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

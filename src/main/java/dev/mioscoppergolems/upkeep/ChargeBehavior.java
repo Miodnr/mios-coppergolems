@@ -62,7 +62,7 @@ public class ChargeBehavior extends Behavior<CopperGolem> {
 	}
 
 	private static boolean wantsCharge(ServerLevel level, CopperGolem golem) {
-		if (golem.isLeashed() || !Upkeep.isJobGolem(golem) || Errands.isBusy(golem)) {
+		if (golem.isLeashed() || !Upkeep.isJobGolem(golem) || Errands.isBusy(golem) || MiosCoppergolemsApi.isBusy(golem)) {
 			return false;
 		}
 		int energy = Upkeep.get(golem).energy();

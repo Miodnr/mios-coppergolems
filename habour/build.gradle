@@ -1,0 +1,67 @@
+plugins {
+	id 'net.fabricmc.fabric-loom'
+}
+
+version = project.version
+group = project.group
+
+base {
+	archivesName = 'mioscoppergolems-habour'
+}
+
+loom {
+	splitEnvironmentSourceSets()
+
+	mods {
+		"mioscoppergolems_habour" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+		// The base mod, so runClient / runServer here start with both.
+		"mioscoppergolems" {
+			sourceSet rootProject.sourceSets.main
+			sourceSet rootProject.sourceSets.client
+		}
+	}
+}
+
+fabricApi {
+	// ./gradlew :habour:runClientGameTest plays a scripted world: harbours, captains, a voyage and screenshots.
+	configureTests {
+		createSourceSet = true
+		modId = "mioscoppergolems_habour_gametest"
+		enableGameTests = false
+		enableClientGameTests = true
+		eula = false
+		clearRunDirectory = true
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	implementation project(':')
+	clientImplementation rootProject.sourceSets.client.output
+	gametestImplementation sourceSets.main.output
+	gametestImplementation sourceSets.client.output
+	gametestImplementation project(':')
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}

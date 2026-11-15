@@ -1,6 +1,7 @@
 package dev.mioscoppergolems.travel;
 
 import com.google.common.collect.ImmutableMap;
+import dev.mioscoppergolems.api.MiosCoppergolemsApi;
 import dev.mioscoppergolems.golem.CartChaining;
 import dev.mioscoppergolems.guide.Guide;
 import dev.mioscoppergolems.upkeep.Upkeep;
@@ -73,6 +74,10 @@ public class RideBehavior extends Behavior<CopperGolem> {
 
 	@Override
 	protected boolean checkExtraStartConditions(ServerLevel level, CopperGolem golem) {
+		if (MiosCoppergolemsApi.isBusy(golem)) {
+			// A captain at sea steers its own boat.
+			return false;
+		}
 		Entity current = golem.getVehicle();
 		if (current != null && this.leftUntil.getOrDefault(current.getUUID(), 0L) > level.getGameTime()) {
 			// A cart rolling on picks up whoever stands in its way, the golem that just got off included.
@@ -274,7 +279,7 @@ public class RideBehavior extends Behavior<CopperGolem> {
 		double bestDistance = Double.MAX_VALUE;
 		for (Entity candidate : level.getEntities(golem, golem.getBoundingBox().inflate(VEHICLE_RANGE), entity -> entity instanceof Minecart || entity instanceof AbstractBoat)) {
 			DeadEnd dead = this.deadEnds.get(candidate.getUUID());
-			if (candidate.isVehicle() || dead != null && dead.goal().distanceTo(goal) < SAME_GOAL || !leadsTowards(level, candidate, toGoal)) {
+			if (candidate.isVehicle() || MiosCoppergolemsApi.isVehicleReserved(candidate) || dead != null && dead.goal().distanceTo(goal) < SAME_GOAL || !leadsTowards(level, candidate, toGoal)) {
 				continue;
 			}
 			double distance = golem.distanceToSqr(candidate);

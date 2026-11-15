@@ -1,0 +1,25 @@
+{
+  "parent": "mioscoppergolems_habour:guide/kontor",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "mioscoppergolems_habour:station"
+    },
+    "title": {
+      "translate": "advancements.mioscoppergolems_habour.guide.station.title"
+    },
+    "description": {
+      "translate": "advancements.mioscoppergolems_habour.guide.station.description"
+    },
+    "frame": "task"
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

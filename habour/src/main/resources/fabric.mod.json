@@ -1,0 +1,25 @@
+{
+	"schemaVersion": 1,
+	"id": "mioscoppergolems_habour",
+	"version": "${version}",
+	"name": "Mios Coppergolems Habour: Harbours & Railways",
+	"description": "Harbours and railways for copper golems: a kontor or railway station, routes, captains sailing chest boats, conductors driving trains of chained copper chest minecarts, and dockhands doing the carrying.",
+	"authors": ["Miodnr"],
+	"license": "All-Rights-Reserved",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.mioscoppergolems.habour.Habour"
+		],
+		"client": [
+			"dev.mioscoppergolems.habour.client.HabourClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*",
+		"mioscoppergolems": "*"
+	}
+}

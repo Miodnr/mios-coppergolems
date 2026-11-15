@@ -1,0 +1,25 @@
+{
+  "parent": "mioscoppergolems_habour:guide/conductor",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "minecraft:chest_minecart"
+    },
+    "title": {
+      "translate": "advancements.mioscoppergolems_habour.guide.train.title"
+    },
+    "description": {
+      "translate": "advancements.mioscoppergolems_habour.guide.train.description"
+    },
+    "frame": "task"
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

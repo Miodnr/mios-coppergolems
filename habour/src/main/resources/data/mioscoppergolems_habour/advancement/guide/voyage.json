@@ -1,0 +1,25 @@
+{
+  "parent": "mioscoppergolems_habour:guide/route",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "minecraft:oak_boat"
+    },
+    "title": {
+      "translate": "advancements.mioscoppergolems_habour.guide.voyage.title"
+    },
+    "description": {
+      "translate": "advancements.mioscoppergolems_habour.guide.voyage.description"
+    },
+    "frame": "goal"
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

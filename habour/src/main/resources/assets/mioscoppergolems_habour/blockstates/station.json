@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mioscoppergolems_habour:block/station"
+    },
+    "facing=east": {
+      "model": "mioscoppergolems_habour:block/station",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "mioscoppergolems_habour:block/station",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mioscoppergolems_habour:block/station",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "B": "minecraft:book",
+    "R": "minecraft:rail",
+    "A": "minecraft:barrel"
+  },
+  "pattern": [
+    "CBC",
+    "RAR",
+    "CCC"
+  ],
+  "result": {
+    "id": "mioscoppergolems_habour:station",
+    "count": 1
+  }
+}

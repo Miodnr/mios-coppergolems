@@ -1,0 +1,25 @@
+{
+  "parent": "mioscoppergolems_habour:guide/captain",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "minecraft:string"
+    },
+    "title": {
+      "translate": "advancements.mioscoppergolems_habour.guide.dockhand.title"
+    },
+    "description": {
+      "translate": "advancements.mioscoppergolems_habour.guide.dockhand.description"
+    },
+    "frame": "task"
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

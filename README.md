@@ -183,9 +183,9 @@ Sorters and couriers are free. Every other job costs something:
 
 ---
 
-## Add-on: Mios Coppergolems Automatisation
+## Add-on: Mios Coppergolems Habour: Harbours & Railways
 
-The [`automatisation/`](automatisation/README.md) folder holds an add-on with **conveyor belts, funnels, chutes, presses, saws, grabber arms and a golem assembler**, in the spirit of Create but more mechanical. There is no power network: every machine has a crank that a copper golem with a **Copper Wrench** has to turn, and repairs when it jams. What the factory makes goes back into the colony: armour plating, rust coating and faster gearwork for golems, satchels and double carts for bigger loads, cheap rails and fences for miners, a faster charging station, and new golems. See its [README](automatisation/README.md).
+The [`habour/`](habour/README.md) folder holds an add-on with **harbours, railways, routes, captains, conductors and dockhands**. Build a harbour with a **Kontor** (warehouse and office) and **Mooring Posts**, give a copper golem a **spyglass** to make it a captain, and set a **route** to another harbour: which items, how many, once or over and over, by timer or redstone. The captains sail the chest boats to the other harbour while the dockhands fetch the goods from the kontor, load the boats and carry the cargo into the other kontor (golems with a piece of string, the **dockhands**, do all the carrying; the same works on rails with a **Railway Station**, **conductors** and trains of chained copper chest minecarts; the route book shows where each captain is), all in plain sight and while you are far away. See its [README](habour/README.md).
 
 ---
 
@@ -196,8 +196,8 @@ Needs **Java 25**, Fabric Loader and Fabric API.
 ```powershell
 $env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-25.0.2.10-hotspot"
 .\gradlew.bat runClient   # start the game with the mod
-.\gradlew.bat build       # mod jar in build/libs/ (and the add-on's in automatisation/build/libs/)
-.\gradlew.bat :automatisation:runClient   # the game with the mod and the add-on
+.\gradlew.bat build       # mod jar in build/libs/
+.\gradlew.bat :habour:runClient   # the game with the mod and the Habour add-on
 ```
 
 ## Project structure
@@ -221,7 +221,7 @@ src/main/java/dev/mioscoppergolems/
   mixin/     swaps in the new golem AI, goal accessors
 src/client/java/dev/mioscoppergolems/client/
   render/    cart renderer with its chain, GolemTrimLayer, GolemAntennaLayer, GolemBobberRenderer
-automatisation/  the Automatisation add-on (its own Gradle subproject)
+habour/          the Habour add-on: harbours, railways, routes, captains, conductors and dockhands (its own Gradle subproject)
 tools/       TrimGen.java (golem trim textures from the vanilla armour trims), SurveyGen.java (Survey Table textures),
              PadGen.java (Charging Pad), HandbookGen.java (handbook icon), GolemEyesGen.java (eye and antenna glow),
              gen_guide.py (advancements and handbook texts of both mods)

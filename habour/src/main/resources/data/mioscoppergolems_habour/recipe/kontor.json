@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "B": "minecraft:book",
+    "P": "#minecraft:planks",
+    "R": "minecraft:barrel"
+  },
+  "pattern": [
+    "CBC",
+    "PRP",
+    "PPP"
+  ],
+  "result": {
+    "id": "mioscoppergolems_habour:kontor",
+    "count": 1
+  }
+}

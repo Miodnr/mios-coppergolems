@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mioscoppergolems_habour:block/kontor"
+    },
+    "facing=east": {
+      "model": "mioscoppergolems_habour:block/kontor",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "mioscoppergolems_habour:block/kontor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mioscoppergolems_habour:block/kontor",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "parent": "mioscoppergolems_habour:guide/station",
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "minecraft:clock"
+    },
+    "title": {
+      "translate": "advancements.mioscoppergolems_habour.guide.conductor.title"
+    },
+    "description": {
+      "translate": "advancements.mioscoppergolems_habour.guide.conductor.description"
+    },
+    "frame": "task"
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}
